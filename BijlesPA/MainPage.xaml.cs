@@ -1,12 +1,16 @@
-﻿namespace BijlesPA
+﻿using BijlesPA.ViewModels;
+
+namespace BijlesPA
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
 
-        public MainPage()
+        public MainPage(MainVM vm)
         {
             InitializeComponent();
+            BindingContext = vm;
+            vm.AddGame("Fortnite", 30, "Actie");
         }
 
         private void OnCounterClicked(object sender, EventArgs e)

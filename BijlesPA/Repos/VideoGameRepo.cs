@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BijlesPA.Models;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace BijlesPA.Repos
 {
-    public class VideoGameRepo : IVideoGameRepo 
+    public class VideoGameRepo : BaseRepository, IVideoGameRepo
     {
         private List<VideoGame> Mygames = new List<VideoGame>();
-        
+
         VideoGame Eldenring = new VideoGame()
         {
             Id = 1,
@@ -18,8 +21,8 @@ namespace BijlesPA.Repos
             Genre = "Actie",
             Prijs = 30,
             Discount = 15
-        }; 
-        
+        };
+
         VideoGame Fortnite = new VideoGame()
         {
             Id = 2,
@@ -37,7 +40,21 @@ namespace BijlesPA.Repos
 
         public void AddVideoGame(VideoGame game)
         {
-            Mygames.Add(game);
+            string query = @"
+        INSERT INTO dbo.Table (Genre, Name, Prijs, Discount) 
+        VALUES (@Genre, @Name, @Prijs, @Discount)";
+
+            var Parameters = new
+            {
+                @Genre = game.Genre,
+                @Name = game.Name,
+                @Prijs = game.Prijs,
+                @Discount = game.Discount
+            };
+            using (IDbConnection connection = new SqlConnection(ConnectionString))
+            {
+                int affectedRows = connection.Execute(query, Parameters);
+            }
         }
 
         public VideoGame GetVideoGameById(int id)
@@ -52,7 +69,7 @@ namespace BijlesPA.Repos
             return totaal;
         }
     }
-    
+
     //Repository: klasse die communiceert met een data source
 }
-   
+

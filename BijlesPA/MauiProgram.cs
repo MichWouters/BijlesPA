@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BijlesPA.Repos;
+using BijlesPA.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace BijlesPA;
 
@@ -18,7 +20,9 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-
+		// Registreren van dependencies doen we hier
+		builder.Services.AddSingleton<IVideoGameRepo, VideoGameRepo>();
+		builder.Services.AddSingleton<MainVM>();
 		return builder.Build();
 	}
 }

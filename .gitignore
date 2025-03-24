@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BijlesPA/Repos/IVideoGameRepo.cs
+/BijlesPA/Models/Developer.cs
+/BijlesPA/Repos/VideoGameRepo.cs
+/BijlesPA/Models/VideoGame.cs
+/.gitignore
